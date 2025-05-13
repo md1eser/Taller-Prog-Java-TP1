@@ -18,16 +18,16 @@ Este proyecto contiene la resolución de problemas del primer trabajo práctico.
 ### Estructura 
 
 taller-java/
-├── pom.xml               ← Archivo de configuración de Maven.
+├── pom.xml ← Archivo de configuración de Maven.
 └── src/
-    ├── main/
-    │   └── java/
-    │       ├── Problema1.java   ← Código fuente de los problemas resueltos.
-    │       └── Problema2.java
-    └── test/
-        └── java/
-            ├── TestProblema1.java   ← Clase de prueba para Problema1.
-            └── TestProblema2.java   ← Clase de prueba para Problema2.
+├── main/
+│ └── java/
+│ ├── Problema1.java ← Código fuente de los problemas resueltos.
+│ └── Problema2.java
+└── test/
+└── java/
+├── TestProblema1.java ← Clase de prueba para Problema1.
+└── TestProblema2.java ← Clase de prueba para Problema2.
 
 
 ### Compilar el proyecto:
