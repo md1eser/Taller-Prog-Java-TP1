@@ -9,40 +9,29 @@ public class Problema1 {
         this.largoMIN = largoMIN;
     }
 
-    public String buscarPalabraMasRepetida(String texto) {
-        String[] palabras = texto.split("[^a-zA-Z]+");//split separa el string texto con el delimitador. el caracter ^ niega lo que sigue, en este caso los caracteres de letras a-z y A-Z. Por lo tanto, se separa el texto en palabras.
-        Map<String, Integer> contador = new HashMap<>();
-        for (String p : palabras) {
-            p = p.toLowerCase();//para que no sea sensible a mayúsculas
-            if (p.length() >= largoMIN) {//se hace la verificación de que la palabra sea mayor o igual al largo mínimo
-                contador.put(p, contador.getOrDefault(p, 0) + 1); //si todavía no estaba, agrega la palabra al mapa. Si ya estaba, suma 1 a la cantidad de veces que se repitió (sobreescribiendo el valor).
-            }
-        }
-        String palabraMasRepetida = null;
+    public String buscarPalabraMasRepetida(String texto) { 
+    //realiza una recorrida por el texto mientas guarda las palabras en un mapa y busca la que más se repite.
+    //considera que cualquier cosa que no sea una letra es un separador de palabras.
+    //no diferencia mayusculas
+        String palabra= "";
+        String palabraMasRepetida = "";
         int maxRepeticiones = 0;
-        for (Map.Entry<String, Integer> elemento : contador.entrySet()) {   //recorre el mapa de palabras y busca la que más se repitió
-            if (elemento.getValue() > maxRepeticiones) {
-                maxRepeticiones = elemento.getValue();
-                palabraMasRepetida = elemento.getKey();
+        Map<String,Integer> contador = new HashMap<>();
+        for(int i=0; i < texto.length(); i++){
+            char charActual = texto.charAt(i);
+            if(!Character.isLetter(charActual)) {
+                if (palabra.length() >= largoMIN){
+                    contador.put(palabra, contador.getOrDefault(palabra,0) + 1);
+                    if (contador.get(palabra) > maxRepeticiones){
+                        maxRepeticiones = contador.get(palabra);
+                        palabraMasRepetida = palabra;
+                    }
+                }
+                palabra = "";
             }
+            else {palabra = palabra + Character.toLowerCase(charActual);}   
         }
-
-        if (palabraMasRepetida == null) {
-            return "No se encontraron palabras con longitud mayor o igual a " + largoMIN;
-        }
-        if (maxRepeticiones == 1) {
-            return "No se encontraron palabras repetidas con longitud mayor o igual a " + largoMIN;
-        }
-        return "La palabra más repetida es: " + palabraMasRepetida + " y se repite " + maxRepeticiones + " veces";
+        System.out.println("Palabra (con más de " + largoMIN + " caracteres) mas repetida es: " + palabraMasRepetida);  
+        return palabraMasRepetida;
     }
-
-
-
-    public static void main(String[] args) {
-        Problema1 p = new Problema1(5);
-        String texto = "Hola MundoA, hola mundoA, hola mundoB, hola mundoB, hola mundoB, hola mundob, hola mundoC, hola mundoC, hola mundoC, hola mundoD";
-        String resultado = p.buscarPalabraMasRepetida(texto);
-        System.out.println(resultado);    
-    }
-
 }
