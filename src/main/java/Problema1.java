@@ -31,7 +31,17 @@ public class Problema1 {
             }
             else {palabra = palabra + Character.toLowerCase(charActual);}   
         }
-        System.out.println("Palabra (con más de " + largoMIN + " caracteres) mas repetida es: " + palabraMasRepetida);  
+
+        // esta parte procesa la última palabra si el texto no termina en un separador
+        if (palabra.length() >= largoMIN) {
+            contador.put(palabra, contador.getOrDefault(palabra, 0) + 1);
+            if (contador.get(palabra) > maxRepeticiones) {
+                maxRepeticiones = contador.get(palabra);
+                palabraMasRepetida = palabra;
+            } 
+        }
+    
+        System.out.println("Palabra (con más de " + largoMIN + " caracteres) mas repetida es: " + palabraMasRepetida +" con " + contador.get(palabraMasRepetida) + " repeticiones.");  
         return palabraMasRepetida;
     }
 }
