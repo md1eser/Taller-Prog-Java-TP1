@@ -1,3 +1,4 @@
+package Problema3;
 public class TestProblema3 {
     public static void main(String[] args) {
         Problema3 problema = new Problema3();
