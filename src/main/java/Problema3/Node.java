@@ -1,3 +1,4 @@
+package Problema3;
 public class Node { //esta clase es parte del problema 3
     private int data;
     private Node left;
