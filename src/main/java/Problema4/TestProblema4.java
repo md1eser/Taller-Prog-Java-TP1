@@ -1,5 +1,5 @@
 package Problema4;
-public class Main {
+public class TestProblema4 {
 
     public static void main(String[] args) {
         testCasoBasico();
@@ -13,7 +13,7 @@ public class Main {
         testFotoAnidada();
         testCadenaVacia();
 
-        System.out.println("✔ Todos los tests pasaron correctamente.");
+        System.out.println("Todos los tests pasaron correctamente.");
     }
 
     // todo los testCasoi son las pruebas que se muestran en el enunciado mismo
