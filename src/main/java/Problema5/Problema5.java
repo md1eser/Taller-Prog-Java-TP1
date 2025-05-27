@@ -1,116 +1,49 @@
 package Problema5;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Problema5 {
 
-    public class Laberinto{
-        private Integer filas;
-        private Integer columnas;
-        private Posicion[][] matriz;
-
-        public Laberinto(long filas, long columnas) {
-            this.filas = filas;
-            this.columnas = columnas;
-        }
-        public void llenarLaberinto(char[][] datos) {
-            for (int i = 0; i < filas; i++) {
-                for (int j = 0; j < columnas; j++) {
-                    matriz[i][j] = new matriz(i, j, datos[i][j]);
-                }
-            }
-        }
-        public ArrayList<Posicion> getFila(int nroFila){
-            ArrayList<Posicion> fila = new ArrayList<Posicion>();
-            for (int i = 0; i < matriz.length; i++) {
-                fila.add(matriz[nroFila][i]);
-            }
-            return fila;
-        }
-    }
-    public class Posicion {
-        private int fila;
-        private int columna;
-        private char valor;
-
-        public Posicion(int fila, int columna, char valor) {
-            this.valor = valor;
-            this.fila = fila;
-            this.columna = columna;
-        }
-        public int getFila() {
-            return fila;
-        }
-        public int getColumna() {
-            return columna;
-        }
-        public boolean esFinal() {
-            return valor == 'S';
-        }
-        public boolean esEntrada() {
-            return valor == 'E';
-        }
-    }
-
-    Integer masCorto =0;
-
     
-    private Posicion encontrarEntrada(char[][] laberinto){
-        for (int i = 0; i < laberinto.length; i++) {
-            for (int j = 0; j < laberinto[i].length; j++) {
-                if (laberinto[i][j] == 'E') {
-                    return new Posicion(i,j, laberinto[i][j]);
-                }
-            }
+    public int solucion(char[][] mapa){
+    	Laberinto lab = new Laberinto(mapa);
+    	ArrayList<Camino> caminos = new ArrayList<Camino>();
+    	Camino camino = new Camino(lab.getEntrada());
+       
+    	this.backtracking(lab, caminos, camino);
+        //System.out.println(caminos);
+        if (caminos.isEmpty()) {
+        	return -1;
         }
-    }
-
-    public int solucion(char[][] laberinto){
-        Posicion entrada = encontrarEntrada(laberinto);
         
-         camino(laberinto, entrada, new ArrayList<Posicion>());
+        int minimo = Integer.MAX_VALUE;
+        for (Camino c : caminos) {
+        	if (minimo > c.getLongitud()) {
+        		minimo = c.getLongitud();
+        	}
+        }
+        return minimo;
     }
 
-    public int caminos(char[][] laberinto, Posicion pos, List<Posicion> camino) {
-        if(pos.esEntrada()){
-            camino.add(pos);
-        }
-        for (Posicion p : this.getPosiblesMovimientos(laberinto, pos)) {
-            camino.add(p);
+    public void backtracking(Laberinto lab, ArrayList<Camino> caminos, Camino caminoActual) {
+    	// te devuelve un camino si existe ó null si no hay caminos a la salida
+    	
+    	//System.out.println("essalida: " + caminoActual.llegoSalida());
+    	
+    	if (caminoActual.llegoSalida()) {
+    		caminos.add(caminoActual.clone());
+    		return;
+    	}
+    	
+        for (Posicion p : lab.getAdyacentes( caminoActual.getUltimaPosicion() )) {
 
-            if(p.esFinal()){
-                if (masCorto > camino.size()) {
-                    masCorto = camino.size();
-                    camino.clear();
-                }
-            }
-            else{
-                caminos(laberinto, p, camino);
-            }
-            
+        	if (caminoActual.addPaso(p)) {
+        		backtracking(lab, caminos, caminoActual);
+            	caminoActual.retroceder();
+        	}
         }
-        camino.removeLast();
 
     }
 
-    public List<Posicion> getPosiblesMovimientos(char[][] laberinto, Posicion pos) {
-        List<Posicion> posibles = new ArrayList<Posicion>();
-        int fila = pos.getFila();
-        int columna = pos.getColumna();
-
-        if (fila < laberinto.length) {
-            posibles.add(new Posicion(fila, columna, laberinto[fila][columna]));
-        }
-        if (fila < laberinto.length - 1 && laberinto[fila + 1][columna] != 'X') {
-            posibles.add(new Posicion(fila + 1, columna, laberinto[fila + 1][columna]));
-        }
-        if (columna > 0 && laberinto[fila][columna - 1] != 'X') {
-            posibles.add(new Posicion(fila, columna - 1, laberinto[fila][columna - 1]));
-        }
-        if (columna < laberinto[0].length - 1 && laberinto[fila][columna + 1] != 'X') {
-            posibles.add(new Posicion(fila, columna + 1, laberinto[fila][columna + 1]));
-        }
-
-        return posibles;
-    }
 }
