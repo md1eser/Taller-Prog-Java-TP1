@@ -1,9 +1,16 @@
 package Problema3;
+
 public class TestProblema3 {
+
     public static void main(String[] args) {
+        testOrdenado();
+        testNoOrdenado();
+    }
+
+    // Caso 1: Árbol ordenado (debe devolver true)
+    public static void testOrdenado() {
         Problema3 problema = new Problema3();
 
-        // Caso 1: Árbol ordenadno (debe devolver true)
         //          10
         //        /   \
         //       5     15
@@ -19,9 +26,13 @@ public class TestProblema3 {
         n15.setRight(new Node(20));
 
         boolean resultado1 = problema.estaOrdenado(raiz1);
-        System.out.println("Caso 1 (debe devolver true): " + resultado1);
+        System.out.println("Test 1 (esperado: true): " + resultado1);
+    }
 
-        // Caso 2: Árbol NO ordenadno (debe devolver false)
+    // Caso 2: Árbol NO ordenado (debe devolver false)
+    public static void testNoOrdenado() {
+        Problema3 problema = new Problema3();
+
         //           10
         //        /     \
         //       5       15
@@ -33,10 +44,10 @@ public class TestProblema3 {
         raiz2.setLeft(n5b);
         raiz2.setRight(n15b);
         n5b.setLeft(new Node(2));
-        n5b.setRight(new Node(12)); // inválido: 12 > 10, pero está en el subárbol izquierdo
-        n15b.setLeft(new Node(6));  // inválido: 6 < 10, pero está en el subárbol derecho
+        n5b.setRight(new Node(12)); // inválido
+        n15b.setLeft(new Node(6));  // inválido
 
         boolean resultado2 = problema.estaOrdenado(raiz2);
-        System.out.println("Caso 2 (debe devolver false): " + resultado2);
+        System.out.println("Test 2 (esperado: false): " + resultado2);
     }
 }
