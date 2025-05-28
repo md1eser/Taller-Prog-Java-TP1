@@ -28,7 +28,7 @@ Para ejecutar una clase de prueba, usa el siguiente comando, reemplazando TestPr
 (Ejecuta el método main de la clase)
 
 ```bash
-mvn exec:java -DmainClass=TestProblema1
+mvn exec:java -DmainClass=TestProblema1 -Dexec.vmArgs="-ea"
 ```
 
 
